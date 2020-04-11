@@ -1,4 +1,9 @@
-
+language: python
+python:
+  - 3.6
+before_install:
+  - python --version
+  - pip install -U pip
 deploy:
   provider: elasticbeanstalk
   access_key_id: $Access key ID
