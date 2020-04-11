@@ -1,11 +1,26 @@
-from flask import Flask, render_template
+import flask
+import os
 
-application = Flask(__name__)
+application = flask.Flask(__name__)
+
+# Only enable Flask debugging if an env var is set to true
+application.debug = os.environ.get('FLASK_DEBUG') in ['true', 'True']
+
+# Get application version from env
+app_version = os.environ.get('APP_VERSION')
+
+# Get cool new feature flag from env
+enable_cool_new_feature = os.environ.get('ENABLE_COOL_NEW_FEATURE') in ['true', 'True']
 
 
 @application.route('/')
-def index():
-    return render_template('index.html')
+def hello_world():
+    message = "Hello, World!!!"
+    return flask.render_template('index.html',
+                                 title=message,
+                                 flask_debug=application.debug,
+                                 app_version=app_version,
+                                 enable_cool_new_feature=enable_cool_new_feature)
 
 
 if __name__ == '__main__':
